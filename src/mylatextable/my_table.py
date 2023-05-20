@@ -33,9 +33,12 @@ class MyTable(metaclass=abc.ABCMeta):
     def _header(self):
         pass
     
-    @abc.abstractmethod
-    def add_row(self):
-        pass
+    def add_row(self, row, normalize=False) -> None:
+        if len(row) != len(self._header_fields):
+            raise ValueError(f"Malformed row with {len(row)} fields, but we were expecting {len(self._header_fields)} fields: {row}")
+        if normalize:
+            row = [r.replace("_", "\\_") for r in row]
+        self._lines.append(" & ".join(row))
     
     @abc.abstractmethod
     def _footer(self):
