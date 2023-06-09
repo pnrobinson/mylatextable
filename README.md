@@ -13,3 +13,15 @@ for row in rows:
     table.add_row(row)
 print(table.get_latex()) # display LaTeX code
 ```
+
+
+
+### Release
+To release a new version, update the version number in pyproject.toml and enter the following commands.
+
+```
+python -m build .
+python -m twine upload dist/*
+```
+
+This package is available at https://pypi.org/project/mylatextable/.
