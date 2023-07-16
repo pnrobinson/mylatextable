@@ -21,6 +21,7 @@ class MyLatexTable(MyTable):
     def _header(self) -> None:
         hlines = []
         hlines.append("\\begin{table}")
+        hlines.append("\\centering")
         hlines.append("\\begin{tabular}" + "{" + self._header_field_formats + "}")
         if self._use_booktabs:
             hlines.append("\\toprule")
@@ -30,6 +31,10 @@ class MyLatexTable(MyTable):
         for h in self._header_fields:
             header.append("\\textbf{" + h +"}")
         hlines.append(" & ".join(header) + "\\\\")
+        if self._use_booktabs:
+            hlines.append("\\midrule")
+        else:
+            hlines.append("\\hline")
         return hlines
     
     def _footer(self) -> None:
