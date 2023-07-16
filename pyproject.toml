@@ -10,7 +10,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mylatextable"
-version = "0.0.1"
+version = "0.0.2"
 requires-python = ">=3.5"
 description = "Quickly generate LaTeX tables"
 readme = "README.md"
