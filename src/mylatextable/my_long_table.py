@@ -6,13 +6,15 @@ class MyLongTable(MyTable):
                 label="to_do",
                 caption="to do",
                 centered=True, 
-                use_booktabs=False) -> None:
+                use_booktabs=False,
+                 fontsize:str=None) -> None:
         super().__init__(header_fields=header_fields, 
                         header_field_formats=header_field_formats, 
                         label=label,
                         caption=caption,
                         centered=centered, 
-                        use_booktabs=use_booktabs)
+                        use_booktabs=use_booktabs,
+                        fontsize=fontsize)
         self._hlines = self._header()
         self._flines = self._footer()
         
@@ -22,6 +24,8 @@ class MyLongTable(MyTable):
         nfields = len(self._header_fields)
         if self._centered:
             hlines.append("\\begin{center}")
+        if self._fontsize is not None:
+            hlines.append(f"\\begin{{{self._fontsize}}}")
         hlines.append("\\begin{longtable}")
         hlines.append("{" + self._header_field_formats + "}")
         hlines.append("\\caption{" + self._caption + "}\\label{tab:" + self._label + "} \\\\")
@@ -38,7 +42,7 @@ class MyLongTable(MyTable):
         hlines.append("\\hline")
         hlines.append(" & ".join(header) + "\\\\ \\hline")
         hlines.append("\\endhead ")
-        hlines.append("\\hline \multicolumn{%d}{|r|}{{Continued on next page}} \\\\ \\hline \n" % nfields)
+        hlines.append("\\hline \\multicolumn{%d}{|r|}{{Continued on next page}} \\\\ \\hline \n" % nfields)
         hlines.append("\\endfoot ")
         hlines.append("\\hline \\hline ")
         hlines.append("\\endlastfoot ")
@@ -51,6 +55,8 @@ class MyLongTable(MyTable):
         flines = []
         flines.append("\\hline")
         flines.append("\\end{longtable}")
+        if self._fontsize is not None:
+            flines.append(f"\\end{{{self._fontsize}}}")
         if self._centered:
             flines.append("\\end{center}")
         return flines

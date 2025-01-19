@@ -9,7 +9,8 @@ class MyTable(metaclass=abc.ABCMeta):
                  label="to_do",
                  caption="to do",
                  centered=True, 
-                 use_booktabs=False) -> None:
+                 use_booktabs=False,
+                 fontsize:str=None) -> None:
         if not isinstance(header_fields, list):
             raise ValueError(f"Argument 'header_fields' must be a list of strings")
         self._header_fields = header_fields
@@ -24,6 +25,7 @@ class MyTable(metaclass=abc.ABCMeta):
         self._use_booktabs = use_booktabs
         self._label = label
         self._caption = caption
+        self._fontsize = fontsize
         self._hlines = []
         self._flines = []
         self._lines = []

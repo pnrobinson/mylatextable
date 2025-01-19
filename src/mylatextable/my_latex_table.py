@@ -7,19 +7,23 @@ class MyLatexTable(MyTable):
                  label="to_do",
                  caption="to do",
                  centered=True, 
-                 use_booktabs=False) -> None:
+                 use_booktabs=False,
+                 fontsize:str=None) -> None:
         super().__init__(header_fields=header_fields, 
                  header_field_formats=header_field_formats, 
                  label=label,
                  caption=caption,
                  centered=centered, 
-                 use_booktabs=use_booktabs)
+                 use_booktabs=use_booktabs,
+                 fontsize=fontsize)
         self._hlines = self._header()
         self._flines = self._footer()
         
         
     def _header(self) -> None:
         hlines = []
+        if self._fontsize is not None:
+            hlines.append("\\begin{fontsize}")
         hlines.append("\\begin{table}")
         hlines.append("\\centering")
         hlines.append("\\begin{tabular}" + "{" + self._header_field_formats + "}")
@@ -47,6 +51,8 @@ class MyLatexTable(MyTable):
         flines.append("\\caption{" + self._caption + "}")
         flines.append("\\label{tab:" + self._label + "}")
         flines.append("\\end{table}")
+        if self._fontsize is not None:
+            flines.append("\\end{fontsize}")
         return flines
 
    
